@@ -19,6 +19,30 @@
           @edit="openEditModal"
           @delete="openDeleteModal"
         />
+
+        <div class="space-y-3 mt-6">
+          <input
+            v-model="newParam.key"
+            placeholder="New Parameter"
+            :class="['p-2 rounded w-full border', themeClass]"
+          />
+          <input
+            v-model="newParam.value"
+            placeholder="Value"
+            :class="['p-2 rounded w-full border', themeClass]"
+          />
+          <input
+            v-model="newParam.description"
+            placeholder="Description"
+            :class="['p-2 rounded w-full border', themeClass]"
+          />
+          <button
+            @click="addParam"
+            class="bg-cyan-500 px-5 py-2 w-full rounded hover:bg-cyan-700 text-white"
+          >
+            ADD
+          </button>
+        </div>
       </div>
 
       <div class="hidden md:grid grid-cols-6 gap-4 text-sm">
@@ -214,20 +238,6 @@
         : 'bg-white text-gray-900'
     )
 
-    // const fetchParams = async () => {
-    //   try {
-    //     const res = await fetch(`${API_URL}/config`, {
-    //       headers: {
-    //         'x-api-key': 'deneme',
-    //       }
-    //     })
-    //     const data = await res.json()
-    //     parameters.value = data
-    //   } catch (err) {
-    //     console.error('Failed to fetch parameters:', err)
-    //   }
-    // }
-
     const getToken = async (): Promise<string | null> => {
       const user = getAuth().currentUser
       return user ? await user.getIdToken() : null
@@ -250,7 +260,6 @@
 
         if (res.ok) {
           newParam.value = { key: '', value: '', description: '', create_date: '' }
-          //await fetchParams()
         } else {
           console.error('Add failed')
         }
@@ -353,7 +362,6 @@
 
         if (res.status === 409) {
           addError('This config was modified by another user. Changes are applied, please try again.')
-          //await fetchParams();
           const latest = parameters.value.find(p => p.key === editParamData.value.key)
           editParamData.value = {
             key: latest.key,
@@ -365,7 +373,6 @@
         } else if (!res.ok) {
           addError('Failed to update config')
         } else {
-          //await fetchParams()
           closeModals()
         }
       } catch (err) {
@@ -389,7 +396,6 @@
           }
         })
         closeModals()
-        //await fetchParams()
       } catch (err) {
         console.error('Delete error:', err)
       }
