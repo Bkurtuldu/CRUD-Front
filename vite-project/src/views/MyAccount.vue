@@ -68,7 +68,7 @@ const user = auth.currentUser
 
 const displayName = ref('')
 const email = ref('')
-const isDark = ref(false)
+const isDark = ref(true)
 
 const currentPassword = ref('')
 const newPassword = ref('')
