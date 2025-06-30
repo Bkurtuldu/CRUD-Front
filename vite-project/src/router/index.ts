@@ -3,11 +3,12 @@ import SignIn from '../views/SignIn.vue'
 import Home from '../views/Home.vue'
 import MyAccount from '../views/MyAccount.vue'
 import { auth } from '../firebase'
+import { onAuthStateChanged } from 'firebase/auth'
 
 const routes = [
-  { path: '/', name: 'Home', component: Home },
+  { path: '/', name: 'Home', component: Home, meta: { requiresAuth: true } },
   { path: '/signin', name: 'SignIn', component: SignIn },
-  { path: '/account', name: 'MyAccount', component: MyAccount }
+  { path: '/account', name: 'MyAccount', component: MyAccount, meta: { requiresAuth: true } }
 ]
 
 const router = createRouter({
@@ -15,14 +16,30 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, _from, next) => {
-  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-  const user = auth.currentUser
+let isAuthResolved = false
 
-  if (requiresAuth && !user) {
-    next('/signin')
+router.beforeEach((to, _from, next) => {
+  if (isAuthResolved) {
+    proceed()
   } else {
-    next()
+    const unsubscribe = onAuthStateChanged(auth, () => {
+      isAuthResolved = true
+      unsubscribe()
+      proceed()
+    })
+  }
+
+  function proceed() {
+    const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+    const user = auth.currentUser
+
+    if (requiresAuth && !user) {
+      next('/signin')
+    } else if (to.path === '/signin' && user) {
+      next('/')
+    } else {
+      next()
+    }
   }
 })
 
