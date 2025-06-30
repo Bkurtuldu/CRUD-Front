@@ -5,9 +5,9 @@ import MyAccount from '../views/MyAccount.vue'
 import { auth } from '../firebase'
 
 const routes = [
-  { path: '/', name: 'Home', component: Home },
+  { path: '/', name: 'Home', component: Home, meta: { requiresAuth: true } },
   { path: '/signin', name: 'SignIn', component: SignIn },
-  { path: '/account', name: 'MyAccount', component: MyAccount }
+  { path: '/account', name: 'MyAccount', component: MyAccount, meta: { requiresAuth: true } },
 ]
 
 const router = createRouter({
