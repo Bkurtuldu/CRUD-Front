@@ -16,8 +16,8 @@
           v-for="param in parameters"
           :key="param.key"
           :param="param"
-          @edit="handleEdit"
-          @delete="handleDelete"
+          @edit="openEditModal"
+          @delete="openDeleteModal"
         />
       </div>
 
@@ -81,9 +81,9 @@
         </div>
       </div>
     </div>
-    <!-- Edit Modal -->
-    <div v-if="showEditModal" class="fixed inset-0 backdrop-blur-sm bg-black/30 flex items-center justify-center z-50">
-      <div class="bg-white text-black p-6 rounded shadow-lg w-full max-w-md space-y-4">
+
+    <div v-if="showEditModal" class="fixed inset-0 bg-black/30 z-50 flex items-center justify-center px-2 sm:px-4">
+      <div class="bg-white text-black p-4 rounded shadow-lg w-full max-w-sm sm:max-w-md space-y-4 max-h-[90vh] overflow-y-auto">
         <h3 class="text-lg font-semibold mb-2">Edit Parameter: {{ editParamData.key }}</h3>
         <input v-model="editParamData.value" placeholder="Value" class="w-full p-2 border rounded" />
         <input v-model="editParamData.description" placeholder="Description" class="w-full p-2 border rounded" />
@@ -91,7 +91,7 @@
           <span class="text-sm font-medium">Edit Country Overrides</span>
           <i :class="['fas', showOverrides ? 'fa-chevron-up' : 'fa-chevron-down']"></i>
         </div>
-        <!-- Country Overrides Editor -->
+
         <div v-if="showOverrides" class="mt-3 space-y-2">
           <div
             v-for="(override, index) in editParamData.overrides"
@@ -123,7 +123,6 @@
             </button>
           </div>
 
-          <!-- Add New Override -->
           <button
             @click="addOverride"
             class="mt-2 px-3 py-1 text-sm bg-blue-100 hover:bg-blue-200 text-blue-700 rounded"
@@ -137,7 +136,8 @@
         </div>
       </div>
     </div>
-    <!-- Delete Modal -->
+
+
     <div v-if="showDeleteModal" class="fixed inset-0 backdrop-blur-sm bg-black/30 flex items-center justify-center z-50">
       <div class="bg-white text-black p-6 rounded shadow-lg w-full max-w-sm space-y-4">
         <h3 class="text-lg font-semibold mb-2">Delete "{{ deleteParamData.key }}"?</h3>
@@ -149,7 +149,6 @@
       </div>
     </div>
 
-      <!-- Toasts -->
     <div class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 space-y-3 w-full max-w-sm">
       <transition-group name="fade" tag="div" class="flex flex-col space-y-2">
         <div

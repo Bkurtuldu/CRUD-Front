@@ -23,10 +23,8 @@
     </transition-group>
     </div>
 
-    <!-- Logo -->
     <img src="../assets/icon.png" alt="Logo" class="w-32 h-32 mb-6" />
 
-    <!-- Card -->
     <div class="w-full max-w-md bg-gray-800 rounded-lg shadow-lg p-6 space-y-4">
       <h2 class="text-center text-xl font-semibold text-gray-300">Please sign in</h2>
       <form novalidate @submit.prevent="submit">
@@ -62,7 +60,6 @@
       </form>
     </div>
 
-    <!-- Footer -->
     <footer class="mt-8 text-gray-500 text-sm">Codeway © {{ new Date().getFullYear() }}</footer>
   </div>
 </template>

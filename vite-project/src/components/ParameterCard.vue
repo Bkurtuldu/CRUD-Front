@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-800 p-4 rounded border border-gray-700">
+  <div :class="['p-4 rounded border border', themeClass]">
     <p><strong>Parameter Key:</strong> {{ param.key }}</p>
     <p><strong>Value:</strong> {{ param.value }}</p>
     <p><strong>Description:</strong> {{ param.description }}</p>
@@ -12,6 +12,8 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
 defineProps<{
   param: {
     key: string
@@ -20,4 +22,10 @@ defineProps<{
     created: string
   }
 }>()
+
+const themeClass = computed(() =>
+  localStorage.getItem('theme') === 'dark'
+    ? 'bg-gray-900 text-white'
+    : 'bg-white text-gray-900'
+)
 </script>

@@ -1,17 +1,16 @@
 <template>
-  <div :class="['min-h-screen px-100 py-10 justify-center flex flex-col items-center', themeClass]">
-
+  <div :class="['min-h-screen py-10 flex justify-center', themeClass]">
     <div class="fixed top-6 left-6 cursor-pointer flex items-center text-blue-400 hover:text-blue-600 z-50" @click="router.push('/')">
-        <i class="fas fa-arrow-left mr-2"></i>
-        <span>Back</span>
+      <i class="fas fa-arrow-left mr-2"></i>
+      <span>Back</span>
     </div>
-    <h2 class="text-2xl font-bold mb-6">My Account</h2>
 
+    <div class="w-full max-w-md px-4 space-y-6 text-center">
+      <h2 class="text-2xl font-bold">My Account</h2>
 
-    <div class="space-y-6 max-w-md">
       <div>
-        <label class="block mb-1 text-sm">Email</label>
-        <input :value="email" disabled :class="['w-full px-20 py-3 rounded border text-center', themeClass]" />
+        <label class="block mb-1 text-sm text-left">Email</label>
+        <input :value="email" disabled :class="['w-full px-4 py-3 rounded border text-center', themeClass]" />
       </div>
 
       <div class="flex items-center justify-between">
@@ -21,41 +20,41 @@
         </button>
       </div>
 
-        <div class="flex items-center justify-between">
+      <div class="flex items-center justify-between">
         <span>Dark Theme</span>
         <button
-            @click="toggleTheme"
-            :class="[
+          @click="toggleTheme"
+          :class="[
             'w-12 h-6 rounded-full flex items-center transition duration-300 focus:outline-none',
             isDark ? 'bg-blue-600' : 'bg-gray-400'
-            ]"
+          ]"
         >
-            <span
+          <span
             :class="[
-                'w-5 h-5 bg-white rounded-full shadow transform transition duration-300',
-                isDark ? 'translate-x-6' : 'translate-x-1'
+              'w-5 h-5 bg-white rounded-full shadow transform transition duration-300',
+              isDark ? 'translate-x-6' : 'translate-x-1'
             ]"
-            ></span>
+          ></span>
         </button>
-        </div>
+      </div>
+    </div>
 
-      <div v-if="showPasswordModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <!-- Password Modal -->
+    <div v-if="showPasswordModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
       <div class="bg-white text-black p-6 rounded shadow-lg w-full max-w-md space-y-4">
         <h3 class="text-lg font-semibold mb-2">Change Password</h3>
         <input v-model="currentPassword" type="password" placeholder="Current Password" class="w-full p-2 border rounded" />
         <input v-model="newPassword" type="password" placeholder="New Password" class="w-full p-2 border rounded" />
         <input v-model="confirmPassword" type="password" placeholder="Confirm New Password" class="w-full p-2 border rounded" />
-
         <div class="flex justify-end space-x-2 mt-4">
           <button @click="showPasswordModal = false" class="px-4 py-2 bg-gray-400 text-white rounded">Cancel</button>
           <button @click="changePassword" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded">Save</button>
         </div>
       </div>
-
     </div>
   </div>
-</div>
 </template>
+
 
 <script setup lang="ts">
 import { computed, ref, onMounted } from 'vue'
