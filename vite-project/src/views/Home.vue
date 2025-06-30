@@ -341,7 +341,8 @@
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`,
+            'x-api-key': import.meta.env.VITE_API_KEY
           },
           body: JSON.stringify({
             value: editParamData.value.value,
@@ -384,7 +385,8 @@
         await fetch(`${API_URL}/config/${deleteParamData.value.key}`, {
           method: 'DELETE',
           headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`,
+            'x-api-key': import.meta.env.VITE_API_KEY
           }
         })
         closeModals()
