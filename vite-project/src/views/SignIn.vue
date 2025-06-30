@@ -100,6 +100,7 @@ const submit = async () => {
     }
   }
 }
+localStorage.setItem('theme', 'dark')
 </script>
 
 
